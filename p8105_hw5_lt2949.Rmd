@@ -4,5 +4,36 @@ author: "Li Tian"
 date: "2023-11-13"
 output: html_document
 ---
+```{r}
+library(tidyverse)
+library(purrr)
+```
+
 
 # Problem1
+
+# Problem2
+```{r}
+#Start with a dataframe of all file names
+file_names <- list.files(path = "data", full.names = TRUE, pattern = "\\.csv$")
+#Read data and extract IDs and arms:
+data_list <- map(file_names, ~{
+  data <- read_csv(.x)
+  file_info <- str_match(.x, "([a-z]+)_([0-9]+)") 
+  data <- data %>% 
+    mutate(subject_id = file_info[2],
+           arm = file_info[1])
+})
+
+#Tidy the data
+tidy_data <- map(data_list, ~pivot_longer(.x, cols = -c(subject_id, arm), names_to = "time", values_to = "observation"))
+all_data <- bind_rows(tidy_data)
+
+#Spaghetti plot
+ggplot(all_data, aes(x = time, y = observation, group = subject_id, color = arm)) +
+  geom_line() +
+  theme_dark() +
+  labs(title = "Observations Over Time by Subject", x = "Time", y = "Observation")
+
+```
+
