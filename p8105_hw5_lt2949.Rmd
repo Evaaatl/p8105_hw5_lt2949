@@ -78,19 +78,13 @@ ggplot(results, aes(x = mu, y = power)) +
   geom_point() +
   geom_line() +
   labs(title = "Power vs True Mean", x = "True Mean (mu)", y = "Power")
-```
-The plot shows test power, the chance of rejecting a false null hypothesis, rising with an increasing true mean, beginning from nearly zero and approaching full power as the effect size grows, highlighting a proportional link between effect size and test power.
 
-```{r}
 # Plot the average estimate of mu_hat
 ggplot(results, aes(x = mu, y = mean_estimate)) +
   geom_point() +
   geom_line() +
   labs(title = "Average Estimate of mu_hat vs True Mean", x = "True Mean (mu)", y = "Average Estimate (mu_hat)")
-```
-The second graph displays a black line depicting the average estimate of the sample mean (\(\hat{\mu}\)) as it corresponds to the true mean. The linear relationship, with a slope around one, suggests that the sample mean reliably reflects the true mean; it proportionately rises as the true mean escalates, pointing to its unbiased nature in estimation.
 
-```{r}
 # Overlay average estimate of mu_hat when null is rejected
 ggplot(results, aes(x = mu)) +
   geom_point(aes(y = mean_estimate)) +
@@ -99,4 +93,3 @@ ggplot(results, aes(x = mu)) +
   geom_line(aes(y = mean_estimate_rejected), color = "red") +
   labs(title = "Average Estimate of mu_hat vs True Mean", x = "True Mean (mu)", y = "Average Estimate (mu_hat)")
 ```
-The third visualization introduces a red line which traces the average estimate of \(\hat{\mu}\) in instances where the null hypothesis is rejected, superimposed on the earlier plot. This line mostly mirrors the initial one, yet it shows minor divergences. The proximity of these two lines indicates that the sample mean continues to be a reliable estimator of the true mean after the null hypothesis is declined, although minor variations may arise due to the diversity among samples that lead to null hypothesis rejection.
